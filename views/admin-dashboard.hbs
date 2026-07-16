@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Painel CIM</title>
+  <link rel="icon" href="/arquivos logo/LOGO DO CIM.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800;900&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div class="admin">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a class="sidebar-brand" href="/admin">
+        <img src="/arquivos logo/LOGO DO CIM.png" alt="CIM">
+        <span class="t">CIM<small>Painel Admin</small></span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <a class="nav-item active" href="/admin"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg> Dashboard</a>
+      <div class="nav-group">Notícias</div>
+      <a class="nav-item" href="/admin/manage"><svg class="icon" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg> Gerenciar notícias</a>
+      <div class="nav-group">Breaking News</div>
+      <a class="nav-item" href="/admin/breaking-news"><svg class="icon" viewBox="0 0 24 24"><path d="M13 2L3 14h8l-1 8 10-12h-8z"/></svg> Publicar breaking</a>
+      <a class="nav-item" href="/admin/breaking-news/manage"><svg class="icon" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg> Gerenciar breaking</a>
+      <div class="nav-group">Vídeos</div>
+      <a class="nav-item" href="/admin/videos"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="5" width="13" height="14" rx="2"/><path d="M16 9l5-3v12l-5-3z"/></svg> Publicar vídeo</a>
+      <a class="nav-item" href="/admin/videos/manage"><svg class="icon" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg> Gerenciar vídeos</a>
+      <div class="nav-group">Site</div>
+      <a class="nav-item" href="/" target="_blank"><svg class="icon" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg> Ver início</a>
+      <a class="nav-item" href="/noticias" target="_blank"><svg class="icon" viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg> Ver notícias</a>
+    </nav>
+    <div class="sidebar-footer">
+      <a class="logout" href="/admin/logout"><svg class="icon" viewBox="0 0 24 24"><path d="M16 17l5-5-5-5M21 12H9M12 19H6a2 2 0 01-2-2V7a2 2 0 012-2h6"/></svg> Sair do painel</a>
+    </div>
+  </aside>
+  <div class="scrim-admin"></div>
+
+  <div class="admin-main">
+    <div class="topbar">
+      <button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu"><svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+      <h1>Dashboard</h1>
+    </div>
+
+    <div class="content">
+
+      <div class="stats">
+        <div class="stat">
+          <div class="ic green"><svg class="icon" viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg></div>
+          <div><div class="num">{{newsCount}}</div><div class="lbl">Notícias publicadas</div></div>
+        </div>
+        <div class="stat">
+          <div class="ic red"><svg class="icon" viewBox="0 0 24 24"><path d="M13 2L3 14h8l-1 8 10-12h-8z"/></svg></div>
+          <div><div class="num">{{breakingNewsCount}}</div><div class="lbl">Breaking news</div></div>
+        </div>
+        <div class="stat">
+          <div class="ic blue"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="5" width="13" height="14" rx="2"/><path d="M16 9l5-3v12l-5-3z"/></svg></div>
+          <div><div class="num">{{videosCount}}</div><div class="lbl">Vídeos</div></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h2>Publicar nova notícia</h2></div>
+        <div class="panel-body">
+          <div class="hint">
+            <strong>Dicas:</strong> use imagem de capa na proporção <strong>5:3</strong> (ex.: 1000×600). No máximo <strong>3 tags</strong> (Enter ou vírgula). Clique em <strong>Ver preview</strong> antes de publicar.
+          </div>
+
+          <form action="/news/publish" method="POST" enctype="multipart/form-data" id="newsForm">
+            <div class="form-grid">
+              <div class="fg full">
+                <label>Título da notícia *</label>
+                <input type="text" name="title" id="inpTitle" placeholder="Ex: UFPB lança novo projeto de pesquisa..." required>
+              </div>
+              <div class="fg full">
+                <label>Subtítulo / resumo *</label>
+                <input type="text" name="subtitle" id="inpSubtitle" placeholder="Um breve resumo sobre o assunto..." required>
+              </div>
+              <div class="fg">
+                <label>Autor *</label>
+                <input type="text" name="author" id="inpAuthor" placeholder="Ex: Maria Eloisy Cavalcanti" required>
+              </div>
+              <div class="fg">
+                <label>Foto do autor</label>
+                <input type="file" name="authorImage" id="inpAuthorImage" accept="image/*">
+              </div>
+              <div class="fg">
+                <label>Data de publicação *</label>
+                <input type="datetime-local" name="date" id="inpDate" required>
+              </div>
+              <div class="fg">
+                <label>Imagem de capa *</label>
+                <input type="file" name="mainImage" id="inpImage" accept="image/*" required>
+              </div>
+              <div class="fg">
+                <label>Legenda da imagem *</label>
+                <input type="text" name="imageDescription" id="inpImageDesc" placeholder="Ex: Fachada do CIM na UFPB" required>
+              </div>
+              <div class="fg full">
+                <label>Corpo da notícia *</label>
+                <div id="editor"></div>
+                <input type="hidden" name="bodyHtml" id="bodyHtml">
+              </div>
+              <div class="fg full">
+                <label>Tags de pesquisa (até 3)</label>
+                <div class="tags-box" id="tagsBox">
+                  <input type="text" class="tag-input" id="tagTyper" placeholder="Digite uma tag e aperte Enter ou vírgula...">
+                </div>
+                <input type="hidden" name="tags" id="inpTags">
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn btn-ghost" id="btnPreview"><svg class="icon" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> Ver preview</button>
+              <button type="submit" class="btn btn-primary">Publicar notícia</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PREVIEW MODAL -->
+<div class="modal" id="previewModal">
+  <div class="modal-card">
+    <div class="modal-head"><h3>Preview da notícia</h3><button class="modal-close" id="btnClosePreview">&times;</button></div>
+    <div class="modal-body">
+      <article class="prev">
+        <img src="" alt="" class="cover" id="prevImage" style="display:none;">
+        <div class="prev-pad">
+          <div class="prev-tags" id="prevTags"></div>
+          <h1 id="prevTitle">Título da notícia</h1>
+          <p class="sub" id="prevSubtitle">Subtítulo da notícia.</p>
+          <div class="meta"><span>Por <strong id="prevAuthor">Autor</strong></span><span id="prevDate">Data</span></div>
+        </div>
+        <div class="content" id="prevContent"></div>
+      </article>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script src="/js/admin.js"></script>
+<script>
+  var quill = new Quill('#editor', {
+    theme: 'snow',
+    placeholder: 'Escreva a notícia completa aqui...',
+    modules: { toolbar: [
+      [{ 'header': [2, 3, false] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      ['blockquote'],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+      ['link', 'image'],
+      ['clean']
+    ] }
+  });
+
+  // Tags
+  var tagsBox = document.getElementById('tagsBox');
+  var tagTyper = document.getElementById('tagTyper');
+  var inpTags = document.getElementById('inpTags');
+  var tagsList = [];
+  tagsBox.addEventListener('click', function () { tagTyper.focus(); });
+  tagTyper.addEventListener('focus', function () { tagsBox.classList.add('focused'); });
+  tagTyper.addEventListener('blur', function () { tagsBox.classList.remove('focused'); });
+  tagTyper.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ',') {
+      e.preventDefault();
+      var val = tagTyper.value.trim();
+      if (val && tagsList.indexOf(val) === -1 && tagsList.length < 3) addTag(val);
+      else if (tagsList.length >= 3) alert('Máximo de 3 tags.');
+      tagTyper.value = '';
+    }
+    if (e.key === 'Backspace' && tagTyper.value === '' && tagsList.length > 0) removeTag(tagsList[tagsList.length - 1]);
+  });
+  function addTag(t) { tagsList.push(t); renderTags(); }
+  function removeTag(t) { tagsList = tagsList.filter(function (x) { return x !== t; }); renderTags(); }
+  function renderTags() {
+    tagsBox.querySelectorAll('.tag-pill').forEach(function (p) { p.remove(); });
+    tagsList.forEach(function (tag) {
+      var pill = document.createElement('span');
+      pill.className = 'tag-pill';
+      pill.innerHTML = '<span></span> <span class="tag-remove">&times;</span>';
+      pill.querySelector('span').textContent = tag;
+      pill.querySelector('.tag-remove').addEventListener('click', function () { removeTag(tag); });
+      tagsBox.insertBefore(pill, tagTyper);
+    });
+    inpTags.value = tagsList.join(',');
+    tagTyper.style.display = tagsList.length >= 3 ? 'none' : 'block';
+  }
+
+  // Preview
+  var modal = document.getElementById('previewModal');
+  var tempImageUrl = '';
+  document.getElementById('inpImage').addEventListener('change', function (e) {
+    if (e.target.files && e.target.files[0]) tempImageUrl = URL.createObjectURL(e.target.files[0]);
+  });
+  document.getElementById('btnPreview').addEventListener('click', function () {
+    document.getElementById('prevTitle').textContent = document.getElementById('inpTitle').value || 'Sem título';
+    document.getElementById('prevSubtitle').textContent = document.getElementById('inpSubtitle').value || 'Sem subtítulo';
+    document.getElementById('prevAuthor').textContent = document.getElementById('inpAuthor').value || 'Autor';
+    var rawDate = document.getElementById('inpDate').value;
+    document.getElementById('prevDate').textContent = rawDate ? new Date(rawDate).toLocaleString('pt-BR') : 'Data não selecionada';
+    var pt = document.getElementById('prevTags'); pt.innerHTML = '';
+    tagsList.forEach(function (t) { var s = document.createElement('span'); s.className = 'prev-tag'; s.textContent = t; pt.appendChild(s); });
+    var img = document.getElementById('prevImage');
+    if (tempImageUrl) { img.src = tempImageUrl; img.style.display = 'block'; } else { img.style.display = 'none'; }
+    document.getElementById('prevContent').innerHTML = document.querySelector('.ql-editor').innerHTML;
+    modal.classList.add('active');
+  });
+  document.getElementById('btnClosePreview').addEventListener('click', function () { modal.classList.remove('active'); });
+  modal.addEventListener('click', function (e) { if (e.target === modal) modal.classList.remove('active'); });
+
+  // Submit
+  document.getElementById('newsForm').onsubmit = function () {
+    var html = document.querySelector('.ql-editor').innerHTML;
+    if (quill.getText().trim().length === 0 && html.indexOf('<img') === -1) {
+      alert('Por favor, escreva o conteúdo da notícia.');
+      return false;
+    }
+    document.getElementById('bodyHtml').value = html;
+  };
+</script>
+</body>
+</html>

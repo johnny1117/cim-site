@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciar vídeos — Painel CIM</title>
+  <link rel="icon" href="/arquivos logo/LOGO DO CIM.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800;900&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div class="admin">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a class="sidebar-brand" href="/admin"><img src="/arquivos logo/LOGO DO CIM.png" alt="CIM"><span class="t">CIM<small>Painel Admin</small></span></a>
+    </div>
+    <nav class="sidebar-nav">
+      <a class="nav-item" href="/admin"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg> Dashboard</a>
+      <div class="nav-group">Notícias</div>
+      <a class="nav-item" href="/admin/manage"><svg class="icon" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg> Gerenciar notícias</a>
+      <div class="nav-group">Breaking News</div>
+      <a class="nav-item" href="/admin/breaking-news"><svg class="icon" viewBox="0 0 24 24"><path d="M13 2L3 14h8l-1 8 10-12h-8z"/></svg> Publicar breaking</a>
+      <a class="nav-item" href="/admin/breaking-news/manage"><svg class="icon" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg> Gerenciar breaking</a>
+      <div class="nav-group">Vídeos</div>
+      <a class="nav-item" href="/admin/videos"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="5" width="13" height="14" rx="2"/><path d="M16 9l5-3v12l-5-3z"/></svg> Publicar vídeo</a>
+      <a class="nav-item active" href="/admin/videos/manage"><svg class="icon" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg> Gerenciar vídeos</a>
+      <div class="nav-group">Site</div>
+      <a class="nav-item" href="/" target="_blank"><svg class="icon" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg> Ver início</a>
+      <a class="nav-item" href="/noticias" target="_blank"><svg class="icon" viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg> Ver notícias</a>
+    </nav>
+    <div class="sidebar-footer"><a class="logout" href="/admin/logout"><svg class="icon" viewBox="0 0 24 24"><path d="M16 17l5-5-5-5M21 12H9M12 19H6a2 2 0 01-2-2V7a2 2 0 012-2h6"/></svg> Sair do painel</a></div>
+  </aside>
+  <div class="scrim-admin"></div>
+
+  <div class="admin-main">
+    <div class="topbar">
+      <button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu"><svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+      <h1>Gerenciar vídeos</h1>
+      <div class="spacer"></div>
+      <a href="/admin/videos" class="btn btn-primary btn-sm"><svg class="icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Publicar</a>
+    </div>
+
+    <div class="content">
+      <div class="panel">
+        <div class="panel-body" style="padding:0;">
+          <div class="table-wrap">
+            <table class="tbl">
+              <thead><tr><th>Vídeo</th><th>Origem</th><th>Duração</th><th style="text-align:right;">Ações</th></tr></thead>
+              <tbody>
+                {{#if videos.length}}
+                {{#each videos}}
+                <tr>
+                  <td>
+                    <div class="cell-title">
+                      {{#if this.mainImage.url}}<img class="cell-thumb" src="{{this.mainImage.url}}" alt="">{{else}}<div class="cell-thumb ph"><svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M8 5v14l11-7z"/></svg></div>{{/if}}
+                      <div><div class="t">{{this.title}}</div><div class="s">{{this.date}}</div></div>
+                    </div>
+                  </td>
+                  <td style="color:var(--muted);">{{this.author}}</td>
+                  <td style="color:var(--muted);white-space:nowrap;">{{this.duration}}</td>
+                  <td>
+                    <div class="actions">
+                      <a href="{{this.link}}" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Abrir</a>
+                      <a href="/admin/videos/edit/{{this.id}}" class="btn btn-ghost btn-sm">Editar</a>
+                      <form action="/admin/videos/delete/{{this.id}}" method="POST" onsubmit="return confirm('Tem certeza que deseja apagar este vídeo?');">
+                        <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+                {{/each}}
+                {{else}}
+                <tr><td colspan="4"><p class="empty">Nenhum vídeo publicado ainda.</p></td></tr>
+                {{/if}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/js/admin.js"></script>
+</body>
+</html>

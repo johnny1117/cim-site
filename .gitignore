@@ -1,0 +1,26 @@
+# Dependências
+/node_modules
+
+# Build
+/dist
+
+# Logs
+*.log
+npm-debug.log*
+
+# Ambiente
+.env
+.env.local
+.vercel
+
+# Banco antigo (migrado para o Supabase)
+data.json
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Imagens enviadas pelo painel (opcional — descomente se não quiser versioná-las)
+# /public/uploads
+
+.vercel

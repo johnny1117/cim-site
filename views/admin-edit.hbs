@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar notícia — Painel CIM</title>
+  <link rel="icon" href="/arquivos logo/LOGO DO CIM.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800;900&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div class="admin">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a class="sidebar-brand" href="/admin"><img src="/arquivos logo/LOGO DO CIM.png" alt="CIM"><span class="t">CIM<small>Painel Admin</small></span></a>
+    </div>
+    <nav class="sidebar-nav">
+      <a class="nav-item" href="/admin"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg> Dashboard</a>
+      <div class="nav-group">Notícias</div>
+      <a class="nav-item active" href="/admin/manage"><svg class="icon" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg> Gerenciar notícias</a>
+      <div class="nav-group">Breaking News</div>
+      <a class="nav-item" href="/admin/breaking-news"><svg class="icon" viewBox="0 0 24 24"><path d="M13 2L3 14h8l-1 8 10-12h-8z"/></svg> Publicar breaking</a>
+      <a class="nav-item" href="/admin/breaking-news/manage"><svg class="icon" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg> Gerenciar breaking</a>
+      <div class="nav-group">Vídeos</div>
+      <a class="nav-item" href="/admin/videos"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="5" width="13" height="14" rx="2"/><path d="M16 9l5-3v12l-5-3z"/></svg> Publicar vídeo</a>
+      <a class="nav-item" href="/admin/videos/manage"><svg class="icon" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg> Gerenciar vídeos</a>
+      <div class="nav-group">Site</div>
+      <a class="nav-item" href="/" target="_blank"><svg class="icon" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg> Ver início</a>
+      <a class="nav-item" href="/noticias" target="_blank"><svg class="icon" viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg> Ver notícias</a>
+    </nav>
+    <div class="sidebar-footer"><a class="logout" href="/admin/logout"><svg class="icon" viewBox="0 0 24 24"><path d="M16 17l5-5-5-5M21 12H9M12 19H6a2 2 0 01-2-2V7a2 2 0 012-2h6"/></svg> Sair do painel</a></div>
+  </aside>
+  <div class="scrim-admin"></div>
+
+  <div class="admin-main">
+    <div class="topbar">
+      <button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu"><svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+      <h1>Editar notícia</h1>
+    </div>
+
+    <div class="content">
+      <div class="panel">
+        <div class="panel-head"><h2>Editar publicação</h2></div>
+        <div class="panel-body">
+          <form action="/news/edit/{{newsItem.id}}" method="POST" enctype="multipart/form-data" id="newsForm">
+            <div class="form-grid">
+              <div class="fg full"><label>Título *</label><input type="text" name="title" id="inpTitle" value="{{newsItem.title}}" required></div>
+              <div class="fg full"><label>Subtítulo / resumo *</label><input type="text" name="subtitle" id="inpSubtitle" value="{{newsItem.subtitle}}" required></div>
+              <div class="fg"><label>Autor *</label><input type="text" name="author" id="inpAuthor" value="{{newsItem.author}}" required></div>
+              <div class="fg"><label>Foto do autor</label><input type="file" name="authorImage" id="inpAuthorImage" accept="image/*">{{#if newsItem.authorImage}}<div style="font-size:12px;margin-top:4px;color:var(--muted);">Imagem atual: <span>{{newsItem.authorImage}}</span></div>{{/if}}</div>
+              <div class="fg"><label>Data de publicação *</label><input type="datetime-local" name="date" id="inpDate" value="{{newsItem.date}}" required></div>
+              <div class="fg"><label>Trocar imagem de capa</label><input type="file" name="mainImage" id="inpImage" accept="image/*"><div style="font-size:12px;margin-top:4px;color:var(--muted);">Imagem atual: <span>{{newsItem.mainImage.url}}</span></div></div>
+              <div class="fg"><label>Legenda da imagem *</label><input type="text" name="imageDescription" id="inpImageDesc" value="{{newsItem.mainImage.description}}" required></div>
+              <div class="fg full"><label>Corpo da notícia *</label><div id="editor"></div><input type="hidden" name="bodyHtml" id="bodyHtml"><div id="rawHtml" style="display:none;">{{{newsItem.bodyHtml}}}</div></div>
+              <div class="fg full"><label>Tags (até 3)</label><div class="tags-box" id="tagsBox"><input type="text" class="tag-input" id="tagTyper" placeholder="Digite uma tag e aperte Enter ou vírgula..."></div><input type="hidden" name="tags" id="inpTags" value="{{#each newsItem.tags}}{{this}}{{#unless @last}},{{/unless}}{{/each}}"></div>
+            </div>
+            <div class="form-actions"><a href="/admin/manage" class="btn btn-ghost">Cancelar</a><button type="submit" class="btn btn-primary">Salvar alterações</button></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script src="/js/admin.js"></script>
+<script>
+  var quill = new Quill('#editor', { theme: 'snow', modules: { toolbar: [
+    [{ 'header': [2, 3, false] }], ['bold', 'italic', 'underline', 'strike'], ['blockquote'], [{ 'list': 'ordered' }, { 'list': 'bullet' }], ['link', 'image'], ['clean']
+  ] } });
+  var rawHtml = document.getElementById('rawHtml').innerHTML;
+  quill.clipboard.dangerouslyPasteHTML(0, rawHtml);
+
+  var tagsBox = document.getElementById('tagsBox'), tagTyper = document.getElementById('tagTyper'), inpTags = document.getElementById('inpTags'), tagsList = [];
+  if (inpTags.value) tagsList = inpTags.value.split(',').map(function (t) { return t.trim(); }).filter(Boolean);
+  tagsBox.addEventListener('click', function () { tagTyper.focus(); });
+  tagTyper.addEventListener('focus', function () { tagsBox.classList.add('focused'); });
+  tagTyper.addEventListener('blur', function () { tagsBox.classList.remove('focused'); });
+  tagTyper.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); var v = tagTyper.value.trim(); if (v && tagsList.indexOf(v) === -1 && tagsList.length < 3) addTag(v); else if (tagsList.length >= 3) alert('Máximo de 3 tags.'); tagTyper.value = ''; }
+    if (e.key === 'Backspace' && tagTyper.value === '' && tagsList.length > 0) removeTag(tagsList[tagsList.length - 1]);
+  });
+  function addTag(t) { tagsList.push(t); renderTags(); }
+  function removeTag(t) { tagsList = tagsList.filter(function (x) { return x !== t; }); renderTags(); }
+  function renderTags() {
+    tagsBox.querySelectorAll('.tag-pill').forEach(function (p) { p.remove(); });
+    tagsList.forEach(function (tag) { var pill = document.createElement('span'); pill.className = 'tag-pill'; pill.innerHTML = '<span></span> <span class="tag-remove">&times;</span>'; pill.querySelector('span').textContent = tag; pill.querySelector('.tag-remove').addEventListener('click', function () { removeTag(tag); }); tagsBox.insertBefore(pill, tagTyper); });
+    inpTags.value = tagsList.join(','); tagTyper.style.display = tagsList.length >= 3 ? 'none' : 'block';
+  }
+  renderTags();
+
+  document.getElementById('newsForm').onsubmit = function () { document.getElementById('bodyHtml').value = document.querySelector('.ql-editor').innerHTML; };
+</script>
+</body>
+</html>

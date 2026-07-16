@@ -1,0 +1,17 @@
+COLOQUE AQUI AS LOGOS DOS 12 PROJETOS (formato .png, fundo transparente de preferência).
+Use EXATAMENTE estes nomes de arquivo:
+
+cannabis-cim.png     -> CIM Cannabis
+vet-cim.png          -> Vet CIM
+interacim.png        -> InteraCIM (droga-nutriente)
+previne-cim.png      -> PREVINE CIM
+vacina-cim.png       -> Vacina CIM
+acao-cim.png         -> Ação CIM (Atenção às doenças negligenciadas)
+exporcim.png         -> ExporCIM
+educacim.png         -> EducaCIM
+descarta-cim.png     -> Descarta CIM
+sensibiliza-cim.png  -> Sensibiliza CIM
+cim-informa.png      -> CIM Informa
+reporter-cim.png     -> Repórter CIM
+
+Enquanto a logo não estiver aqui, o card aparece sem imagem (sem quebrar o layout).

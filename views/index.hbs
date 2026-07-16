@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CIM-UFPB — Centro de Informação sobre Medicamentos</title>
+<meta name="description" content="Centro de Informação sobre Medicamentos da UFPB. Notícias, evidências científicas e orientação sobre o uso racional de medicamentos.">
+<meta name="theme-color" content="#11823f">
+<meta property="og:title" content="CIM-UFPB — Centro de Informação sobre Medicamentos">
+<meta property="og:description" content="Informação farmacêutica confiável, baseada em evidências, da Universidade Federal da Paraíba.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="/arquivos logo/LOGO DO CIM.png">
+<link rel="icon" href="/arquivos logo/LOGO DO CIM.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800;900&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/site.css">
+<script>(function(){try{var t=localStorage.getItem('cim-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="container">
+    <span class="topbar-date" id="today">Carregando…</span>
+    <div class="topbar-links">
+      <a href="/sobre">Sobre o CIM</a>
+      <a href="#contato">Contato</a>
+      <a href="https://www.instagram.com/cimufpb/" target="_blank" rel="noopener">@cimufpb</a>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="/" aria-label="Página inicial do CIM-UFPB">
+      <img src="/arquivos logo/LOGO DO CIM.png" alt="Logo CIM-UFPB">
+      <span class="brand-text">CIM<small>Informação sobre Medicamentos</small></span>
+    </a>
+    <nav class="nav-links" aria-label="Navegação principal">
+      <a href="/" class="active">Início</a>
+      <a href="/noticias">Notícias</a>
+      <a href="/breaking-news">Breaking News</a>
+      <a href="/videos">Vídeos</a>
+      <a href="/sobre">Sobre</a>
+    </nav>
+    <div class="nav-tools">
+      <a class="icon-btn" href="/noticias" aria-label="Buscar notícias">
+        <svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      </a>
+      <button class="icon-btn" data-theme-icon onclick="toggleTheme()" aria-label="Alternar tema">
+        <svg class="icon ic-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>
+        <svg class="icon ic-sun" style="display:none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>
+      </button>
+      <button class="icon-btn nav-toggle" onclick="toggleMenu()" aria-label="Abrir menu">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="scrim"></div>
+  <div class="panel">
+    <div class="mm-head">
+      <span class="brand-text">CIM</span>
+      <button class="icon-btn" data-close aria-label="Fechar menu">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <a href="/">Início</a>
+    <a href="/noticias">Notícias</a>
+    <a href="/breaking-news">Breaking News</a>
+    <a href="/videos">Vídeos</a>
+    <a href="/sobre">Sobre</a>
+    <a href="#contato">Contato</a>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-label">
+    <svg class="icon" viewBox="0 0 24 24"><path d="M13 2L3 14h8l-1 8 10-12h-8z"/></svg> Plantão
+  </div>
+  <div class="ticker-track">
+    <div class="ticker-items">
+      {{#each tickerNews}}<span>{{this.title}}</span>{{/each}}
+      {{#each tickerNews}}<span>{{this.title}}</span>{{/each}}
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero container" id="noticias">
+  <span class="kicker">Últimas publicações</span>
+  <div class="hero-grid">
+    {{#if mainNews}}
+    <a class="lead" href="/news/{{mainNews.id}}">
+      {{#if mainNews.mainImage.url}}
+      <img src="{{mainNews.mainImage.url}}" alt="{{mainNews.mainImage.description}}">
+      {{else}}
+      <div class="lead-fallback"></div>
+      {{/if}}
+      <div class="lead-body">
+        <span class="tag">{{#if mainNews.tags.[0]}}{{mainNews.tags.[0]}}{{else}}Destaque{{/if}}</span>
+        <h2>{{mainNews.title}}</h2>
+        {{#if mainNews.subtitle}}<p>{{mainNews.subtitle}}</p>{{/if}}
+        <div class="lead-meta">
+          <span><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>{{mainNews.date}}</span>
+          {{#if mainNews.author}}<span><svg class="icon" viewBox="0 0 24 24"><path d="M20 21a8 8 0 10-16 0"/><circle cx="12" cy="7" r="4"/></svg>{{mainNews.author}}</span>{{/if}}
+        </div>
+      </div>
+    </a>
+    {{else}}
+    <div class="lead"><div class="lead-fallback"></div></div>
+    {{/if}}
+
+    <div class="hero-side">
+      {{#each sideNews}}
+      <a class="mini" href="/news/{{this.id}}">
+        {{#if this.mainImage.url}}
+        <img class="mini-img" src="{{this.mainImage.url}}" alt="{{this.mainImage.description}}">
+        {{else}}
+        <div class="mini-img ph"><svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5V6a2 2 0 012-2h9l5 5v10.5a1.5 1.5 0 01-1.5 1.5h-12A1.5 1.5 0 014 19.5z"/><path d="M14 4v5h5"/></svg></div>
+        {{/if}}
+        <div class="mini-body">
+          <span class="tag">{{#if this.tags.[0]}}{{this.tags.[0]}}{{else}}Notícia{{/if}}</span>
+          <h3>{{this.title}}</h3>
+          <span class="time">{{this.date}}</span>
+        </div>
+      </a>
+      {{/each}}
+    </div>
+  </div>
+</section>
+
+<!-- BREAKING NEWS -->
+<section class="section alt" id="breaking">
+  <div class="container">
+    <div class="section-head">
+      <div><span class="kicker" style="color:var(--breaking)">Urgente</span><h2 style="margin-top:8px">Breaking News</h2></div>
+      <a class="see-all" href="/breaking-news" style="color:var(--breaking)">Ver tudo <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+    <div class="cards">
+      {{#if homeBreakingNews.length}}
+      {{#each homeBreakingNews}}
+      <a class="card-news breaking" href="/news/breaking/{{this.id}}">
+        {{#if this.mainImage.url}}
+        <img class="card-thumb" src="{{this.mainImage.url}}" alt="{{this.mainImage.description}}">
+        {{else}}
+        <div class="card-thumb ph"><svg class="icon" viewBox="0 0 24 24"><path d="M4 11a9 9 0 019-9M4 4l16 16"/></svg></div>
+        {{/if}}
+        <div class="card-body">
+          <span class="tag red">{{#if this.tags.[0]}}{{this.tags.[0]}}{{else}}Urgente{{/if}}</span>
+          <h3>{{this.title}}</h3>
+          {{#if this.subtitle}}<p>{{this.subtitle}}</p>{{/if}}
+          <div class="card-meta"><span>{{this.date}}</span>{{#if this.author}}<span>{{this.author}}</span>{{/if}}</div>
+        </div>
+      </a>
+      {{/each}}
+      {{else}}
+      <p style="grid-column:1/-1;text-align:center;color:var(--muted);padding:32px 0;">Nenhum breaking news no momento.</p>
+      {{/if}}
+    </div>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section class="section videos" id="videos">
+  <div class="container">
+    <div class="section-head">
+      <h2>Vídeos</h2>
+      <a class="see-all" href="/videos">Ver todos <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+    <div class="cards cols-3">
+      {{#if homeVideos.length}}
+      {{#each homeVideos}}
+      <a class="card-video" href="{{this.link}}" target="_blank" rel="noopener">
+        <div class="video-thumb">
+          {{#if this.mainImage.url}}<img src="{{this.mainImage.url}}" alt="{{this.title}}">{{else}}<div class="ph-fill"><svg class="icon" viewBox="0 0 24 24" style="width:40px;height:40px"><path d="M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M10 9l5 3-5 3z"/></svg></div>{{/if}}
+          <div class="play"><div class="play-circle"><svg class="icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+          {{#if this.duration}}<span class="video-duration">{{this.duration}}</span>{{/if}}
+        </div>
+        <div class="video-body">
+          <span class="chan">{{this.author}}</span>
+          <h3>{{this.title}}</h3>
+          {{#if this.subtitle}}<p>{{this.subtitle}}</p>{{/if}}
+          <div class="video-meta"><span>{{this.date}}</span></div>
+        </div>
+      </a>
+      {{/each}}
+      {{else}}
+      <p style="grid-column:1/-1;text-align:center;color:#93a99c;padding:32px 0;">Nenhum vídeo publicado no momento.</p>
+      {{/if}}
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="section newsletter">
+  <div class="container newsletter-inner">
+    <span class="icon-badge"><svg class="icon" viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg></span>
+    <h2>Receba as novidades do CIM</h2>
+    <p>Notícias sobre medicamentos, pesquisas e saúde baseada em evidências, direto no seu e-mail. Gratuito e sem spam.</p>
+    <form onsubmit="return false;">
+      <input type="email" placeholder="seu@email.com.br" aria-label="Seu e-mail" required>
+      <button type="submit">Inscrever-se</button>
+    </form>
+    <div class="note">Ao se inscrever, você concorda com nossa política de privacidade. Cancele quando quiser.</div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section class="section" id="sobre">
+  <div class="container">
+    <div class="section-head"><h2>Sobre o CIM-UFPB</h2></div>
+    <div class="about-grid">
+      <div>
+        <p>O <strong style="color:var(--brand)">CIM — Centro de Informação sobre Medicamentos</strong> da Universidade Federal da Paraíba reúne estudantes, professores e profissionais de saúde em torno de um objetivo: levar informação farmacêutica confiável a quem precisa.</p>
+        <p>Com notícias, análises clínicas e orientações baseadas em evidências, apoiamos decisões terapêuticas mais seguras e promovemos o uso racional de medicamentos.</p>
+        <div class="about-stats">
+          <div><div class="num">38</div><div class="lbl">Extensionistas</div></div>
+          <div><div class="num">12</div><div class="lbl">Projetos de extensão</div></div>
+          <div><div class="num">27</div><div class="lbl">CIMs no Brasil</div></div>
+        </div>
+        <a href="/sobre" class="btn btn-primary" style="margin-top:24px;">Conheça o CIM <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="about-mission">
+        <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg>
+        <h3>Nossa missão</h3>
+        <p>Democratizar o acesso à informação farmacêutica de qualidade, contribuindo para o uso racional de medicamentos e a promoção da saúde pública.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" id="contato">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="/arquivos logo/LOGO DO CIM BRANCO.png" alt="Logo CIM-UFPB">
+          <span class="ftxt">CIM-UFPB<small>Informação sobre Medicamentos</small></span>
+        </div>
+        <p class="footer-about">O Centro de Informação sobre Medicamentos da UFPB promove o uso racional de medicamentos por meio de informação técnico-científica, educação em saúde e apoio à decisão clínica.</p>
+      </div>
+      <div>
+        <h4>Conteúdo</h4>
+        <ul>
+          <li><a href="/noticias">Notícias</a></li>
+          <li><a href="/breaking-news">Breaking News</a></li>
+          <li><a href="/videos">Vídeos</a></li>
+          <li><a href="/sobre">Sobre Nós</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Fale Conosco</h4>
+        <div class="footer-contact">
+          <a href="https://www.instagram.com/cimufpb/" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>@cimufpb</a>
+          <a href="mailto:cimufpb@gmail.com"><svg class="icon" viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>cimufpb@gmail.com</a>
+          <span><svg class="icon" viewBox="0 0 24 24"><path d="M12 21s-7-6.3-7-11a7 7 0 0114 0c0 4.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Dep. de Ciências Farmacêuticas, UFPB</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Centro de Informação sobre Medicamentos — Universidade Federal da Paraíba. Todos os direitos reservados.</div>
+  </div>
+</footer>
+
+<script src="/js/site.js"></script>
+</body>
+</html>

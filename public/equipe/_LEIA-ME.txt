@@ -1,0 +1,10 @@
+COLOQUE AQUI AS FOTOS DA COORDENAÇÃO (formato .jpg).
+Use EXATAMENTE estes nomes de arquivo:
+
+gabriel.jpg   -> Prof. Dr. Gabriel Freitas (o homem)
+eloiza.jpg    -> Profa. Dra. Eloiza Campana (a de cabelo claro)
+gabriela.jpg  -> Gabriella Barros (a de jaleco)
+
+As fotos aparecem dentro de um círculo. Se o arquivo não estiver aqui,
+o site mostra as iniciais (GF, EC, GB) automaticamente.
+Dica: fotos quadradas (1:1) ficam melhores no recorte circular.

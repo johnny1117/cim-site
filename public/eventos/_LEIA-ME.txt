@@ -1,0 +1,6 @@
+COLOQUE AQUI A LOGO DO EVENTO URM (formato .png, fundo transparente).
+Use EXATAMENTE este nome de arquivo:
+
+urm.png   -> logo do URM (aparece na faixa do "IV Simpósio de Uso Racional de Medicamentos")
+
+Enquanto não estiver aqui, a faixa do evento aparece sem a logo (sem quebrar o layout).

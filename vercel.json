@@ -1,6 +1,7 @@
 {
   "version": 2,
   "builds": [
+    { "src": "public/**", "use": "@vercel/static" },
     {
       "src": "api/index.ts",
       "use": "@vercel/node",
@@ -8,6 +9,11 @@
     }
   ],
   "routes": [
+    {
+      "src": "/(.*\\.(?:png|jpe?g|gif|svg|webp|avif|ico|css|js|mjs|map|woff2?|ttf|otf|eot|mp4|webm|pdf))",
+      "dest": "/public/$1",
+      "headers": { "cache-control": "public, max-age=31536000, immutable" }
+    },
     { "src": "/(.*)", "dest": "/api/index.ts" }
   ]
 }

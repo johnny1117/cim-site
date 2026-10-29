@@ -26,7 +26,8 @@ let initPromise: Promise<NestExpressApplication> | null = null;
 async function bootstrap(): Promise<NestExpressApplication> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, new ExpressAdapter(server));
 
-  app.useStaticAssets(join(process.cwd(), 'public'));
+  // redirect:false: sem isso, /projetos (pasta de logos) redirecionaria para /projetos/ em vez de abrir a página
+  app.useStaticAssets(join(process.cwd(), 'public'), { redirect: false });
   app.setBaseViewsDir(join(process.cwd(), 'views'));
   app.setViewEngine('hbs');
   app.set('trust proxy', 1);

@@ -1,6 +1,7 @@
 import { Controller, Get, Render, Query } from '@nestjs/common';
 import { AppService } from './app.service';
 import { DataService } from './data/data.service';
+import { PROJECTS } from './data/projects';
 
 @Controller()
 export class AppController {
@@ -187,6 +188,12 @@ export class AppController {
   @Render('sobre')
   sobre() {
     return {};
+  }
+
+  @Get('projetos')
+  @Render('projetos')
+  projetos() {
+    return { projects: PROJECTS, total: PROJECTS.length };
   }
 
   @Get('noticias')

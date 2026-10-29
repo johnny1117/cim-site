@@ -30,6 +30,8 @@ async function bootstrap(): Promise<NestExpressApplication> {
   app.useStaticAssets(join(process.cwd(), 'public'), { redirect: false });
   app.setBaseViewsDir(join(process.cwd(), 'views'));
   app.setViewEngine('hbs');
+  // versão dos arquivos CSS/JS: muda a cada deploy e força o navegador a baixar a versão nova
+  app.getHttpAdapter().getInstance().locals.assetV = (process.env.VERCEL_GIT_COMMIT_SHA || String(Date.now())).slice(0, 8);
   app.set('trust proxy', 1);
 
   await app.init();

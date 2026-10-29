@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800;900&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="/css/admin.css?v={{assetV}}">
 </head>
 <body>
 <div class="admin">
@@ -66,7 +66,7 @@
   </div>
 </div>
 
-<script src="/js/admin.js"></script>
+<script src="/js/admin.js?v={{assetV}}"></script>
 <script>
   var tagsBox = document.getElementById('tagsBox'), tagTyper = document.getElementById('tagTyper'), inpTags = document.getElementById('inpTags'), tagsList = [];
   tagsBox.addEventListener('click', function () { tagTyper.focus(); });

@@ -10,7 +10,12 @@
   ],
   "routes": [
     {
-      "src": "/(.*\\.(?:png|jpe?g|gif|svg|webp|avif|ico|css|js|mjs|map|woff2?|ttf|otf|eot|mp4|webm|pdf))",
+      "src": "/(.*\\.(?:css|js|mjs|map))",
+      "dest": "/public/$1",
+      "headers": { "cache-control": "public, max-age=0, must-revalidate" }
+    },
+    {
+      "src": "/(.*\\.(?:png|jpe?g|gif|svg|webp|avif|ico|woff2?|ttf|otf|eot|mp4|webm|pdf))",
       "dest": "/public/$1",
       "headers": { "cache-control": "public, max-age=31536000, immutable" }
     },

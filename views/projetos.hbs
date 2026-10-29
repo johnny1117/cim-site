@@ -65,71 +65,175 @@
 </div>
 
 <!-- HERO -->
-<section class="sobre-hero prj-hero">
+<section class="pj-hero">
   <div class="container">
     <span class="kicker">Extensão universitária</span>
     <h1>Nossos projetos</h1>
-    <p class="lead-text">São {{total}} projetos de extensão que levam a informação sobre medicamentos para fora da universidade: em Unidades de Saúde da Família, escolas, praças, clínicas parceiras e nas redes sociais. Cada um cuida de um tema, mas todos têm o mesmo propósito: <strong>promover o uso racional de medicamentos</strong> e combater a desinformação em saúde.</p>
+    <p>{{total}} projetos levando informação sobre medicamentos para USFs, escolas, praças e redes sociais. Clique em um projeto para conhecer melhor.</p>
   </div>
 </section>
 
-<!-- ÍNDICE -->
-<section class="section prj-index-wrap">
+<!-- MOSAICO -->
+<section class="pj-wrap">
   <div class="container">
-    <div class="section-head"><h2>Conheça cada projeto</h2></div>
-    <nav class="prj-index" aria-label="Ir para um projeto">
+    <div class="pj-grid">
       {{#each projects}}
-      <a class="prj-chip" href="#{{slug}}">
-        <span class="prj-chip-logo"><img src="{{logo}}" alt="" loading="lazy"></span>
-        <span class="prj-chip-txt"><strong>{{name}}</strong><small>{{theme}}</small></span>
-      </a>
+      <button type="button" class="pj-card{{#if size}} is-{{size}}{{/if}}" style="--accent: {{accent}}" data-project="{{slug}}" aria-haspopup="dialog" aria-label="Ver mais sobre o {{name}}">
+        <span class="pj-logo"><img src="{{logo}}" alt="" loading="lazy"></span>
+        <span class="pj-txt">
+          <span class="pj-tag">{{theme}}</span>
+          <span class="pj-name">{{name}}</span>
+          <span class="pj-short">{{short}}</span>
+          <span class="pj-more">Saiba mais <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </span>
+      </button>
       {{/each}}
-    </nav>
-  </div>
-</section>
-
-<!-- PROJETOS -->
-<section class="section prj-list-wrap">
-  <div class="container">
-    {{#each projects}}
-    <article class="prj" id="{{slug}}">
-      <div class="prj-media">
-        <img src="{{logo}}" alt="Logo do projeto {{name}}" loading="lazy">
-      </div>
-      <div class="prj-body">
-        <span class="prj-theme">{{theme}}</span>
-        <h2>{{name}}</h2>
-        {{#each summary}}<p>{{this}}</p>{{/each}}
-        {{#if instagram}}
-        <div class="prj-links">
-          {{#each instagram}}
-          <a class="prj-ig" href="{{url}}" target="_blank" rel="noopener">
-            <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>{{handle}}
-          </a>
-          {{/each}}
-        </div>
-        {{/if}}
-      </div>
-    </article>
-    {{/each}}
+    </div>
   </div>
 </section>
 
 <!-- CHAMADA -->
-<section class="section prj-cta-wrap">
+<section class="pj-wrap pj-cta-wrap">
   <div class="container">
-    <div class="prj-cta">
+    <div class="pj-cta">
       <div>
         <h2>Quer levar um projeto para a sua escola ou unidade de saúde?</h2>
         <p>Fale com a equipe do CIM-UFPB. A gente adora uma parceria.</p>
       </div>
-      <div class="prj-cta-actions">
+      <div class="pj-cta-actions">
         <a class="btn btn-primary" href="https://www.instagram.com/cimufpb/" target="_blank" rel="noopener">Falar no Instagram</a>
         <a class="btn btn-ghost" href="mailto:cimufpb@gmail.com">Enviar e-mail</a>
       </div>
     </div>
   </div>
 </section>
+
+<!-- CONTEÚDO DOS POP-UPS (um template por projeto) -->
+{{#each projects}}
+<template id="pj-tpl-{{slug}}">
+  <div class="pm-head" style="--accent: {{accent}}">
+    <span class="pm-logo"><img src="{{logo}}" alt="Logo do {{name}}"></span>
+    <div>
+      <span class="pj-tag">{{theme}}</span>
+      <h2 class="pm-title" id="pm-title">{{name}}</h2>
+    </div>
+  </div>
+  <div class="pm-grid{{#if photos.length}} has-photos{{/if}}">
+    {{#if photos.length}}
+    <div class="pm-gallery" data-gallery>
+      <figure class="pm-figure">
+        <div class="pm-frame">
+          <img src="{{photos.[0].src}}" alt="{{photos.[0].caption}}" data-main>
+          {{#if photos.[1]}}
+          <button type="button" class="pm-nav prev" data-step="-1" aria-label="Foto anterior"><svg class="icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+          <button type="button" class="pm-nav next" data-step="1" aria-label="Próxima foto"><svg class="icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
+          {{/if}}
+        </div>
+        <figcaption data-caption>{{photos.[0].caption}}</figcaption>
+      </figure>
+      {{#if photos.[1]}}
+      <div class="pm-thumbs">
+        {{#each photos}}
+        <button type="button" class="pm-thumb{{#if @first}} active{{/if}}" data-index="{{@index}}" data-src="{{src}}" data-caption="{{caption}}" aria-label="{{caption}}"><img src="{{src}}" alt="" loading="lazy"></button>
+        {{/each}}
+      </div>
+      {{/if}}
+    </div>
+    {{/if}}
+    <div class="pm-text">
+      {{#each summary}}<p>{{this}}</p>{{/each}}
+      {{#if instagram}}
+      <div class="pm-links">
+        {{#each instagram}}
+        <a class="pm-ig" href="{{url}}" target="_blank" rel="noopener">
+          <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>{{handle}}
+        </a>
+        {{/each}}
+      </div>
+      {{/if}}
+    </div>
+  </div>
+</template>
+{{/each}}
+
+<dialog class="pm" id="pj-modal" aria-labelledby="pm-title">
+  <button type="button" class="pm-close" aria-label="Fechar"><svg class="icon" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+  <div class="pm-body"></div>
+</dialog>
+
+<script>
+(function () {
+  var modal = document.getElementById('pj-modal');
+  var body = modal.querySelector('.pm-body');
+  var lastCard = null;
+
+  function open(slug, card) {
+    var tpl = document.getElementById('pj-tpl-' + slug);
+    if (!tpl) return;
+    body.innerHTML = '';
+    body.appendChild(tpl.content.cloneNode(true));
+    lastCard = card || document.querySelector('[data-project="' + slug + '"]');
+    if (typeof modal.showModal === 'function') modal.showModal(); else modal.setAttribute('open', '');
+    document.documentElement.classList.add('pm-lock');
+    body.scrollTop = 0;
+    try { history.replaceState(null, '', '#' + slug); } catch (e) {}
+  }
+
+  function close() {
+    if (modal.open) modal.close(); else modal.removeAttribute('open');
+  }
+
+  modal.addEventListener('close', function () {
+    document.documentElement.classList.remove('pm-lock');
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+    if (lastCard) lastCard.focus();
+  });
+
+  // clicar fora da caixa fecha
+  modal.addEventListener('click', function (e) {
+    if (e.target === modal) close();
+  });
+  modal.querySelector('.pm-close').addEventListener('click', close);
+
+  // galeria
+  function show(gal, i) {
+    var thumbs = gal.querySelectorAll('.pm-thumb');
+    if (!thumbs.length) return;
+    i = (i + thumbs.length) % thumbs.length;
+    var t = thumbs[i];
+    var img = gal.querySelector('[data-main]');
+    img.src = t.getAttribute('data-src');
+    img.alt = t.getAttribute('data-caption');
+    gal.querySelector('[data-caption]').textContent = t.getAttribute('data-caption');
+    thumbs.forEach(function (x, j) { x.classList.toggle('active', j === i); });
+    gal.setAttribute('data-current', i);
+  }
+  body.addEventListener('click', function (e) {
+    var gal = e.target.closest('[data-gallery]');
+    if (!gal) return;
+    var thumb = e.target.closest('.pm-thumb');
+    var nav = e.target.closest('.pm-nav');
+    var cur = parseInt(gal.getAttribute('data-current') || '0', 10);
+    if (thumb) show(gal, parseInt(thumb.getAttribute('data-index'), 10));
+    else if (nav) show(gal, cur + parseInt(nav.getAttribute('data-step'), 10));
+  });
+  modal.addEventListener('keydown', function (e) {
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    var gal = body.querySelector('[data-gallery]');
+    if (!gal) return;
+    var cur = parseInt(gal.getAttribute('data-current') || '0', 10);
+    show(gal, cur + (e.key === 'ArrowRight' ? 1 : -1));
+  });
+
+  document.querySelectorAll('[data-project]').forEach(function (card) {
+    card.addEventListener('click', function () { open(card.getAttribute('data-project'), card); });
+  });
+
+  // link direto: /projetos#vet-cim já abre o projeto
+  var h = location.hash.slice(1);
+  if (h && document.getElementById('pj-tpl-' + h)) open(h);
+})();
+</script>
 
 <!-- FOOTER -->
 <footer class="footer" id="contato">

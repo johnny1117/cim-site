@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projetos de extensão — CIM-UFPB</title>
+<meta name="description" content="Conheça os projetos de extensão do CIM-UFPB: educação em saúde e uso racional de medicamentos em USFs, escolas e nas redes sociais.">
+<meta name="theme-color" content="#11823f">
+<meta property="og:title" content="Projetos de extensão do CIM-UFPB">
+<meta property="og:description" content="Informação técnico-científica sobre medicamentos, de forma objetiva, imparcial e oportuna.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="/arquivos logo/LOGO DO CIM.png">
+<link rel="icon" href="/arquivos logo/LOGO DO CIM.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800;900&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/site.css">
+<script>(function(){try{var t=localStorage.getItem('cim-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="/" aria-label="Página inicial do CIM-UFPB">
+      <img src="/arquivos logo/LOGO DO CIM.png" alt="Logo CIM-UFPB">
+      <span class="brand-text">CIM<small>Informação sobre Medicamentos</small></span>
+    </a>
+    <nav class="nav-links" aria-label="Navegação principal">
+      <a href="/">Início</a>
+      <a href="/noticias">Notícias</a>
+      <a href="/breaking-news">Breaking News</a>
+      <a href="/videos">Vídeos</a>
+      <a href="/projetos" class="active">Projetos</a>
+      <a href="/sobre">Sobre</a>
+    </nav>
+    <div class="nav-tools">
+      <a class="icon-btn" href="/noticias" aria-label="Buscar notícias">
+        <svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      </a>
+      <button class="icon-btn" data-theme-icon onclick="toggleTheme()" aria-label="Alternar tema">
+        <svg class="icon ic-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>
+        <svg class="icon ic-sun" style="display:none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>
+      </button>
+      <button class="icon-btn nav-toggle" onclick="toggleMenu()" aria-label="Abrir menu">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="scrim"></div>
+  <div class="panel">
+    <div class="mm-head"><span class="brand-text">CIM</span>
+      <button class="icon-btn" data-close aria-label="Fechar menu"><svg class="icon" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    </div>
+    <a href="/">Início</a>
+    <a href="/noticias">Notícias</a>
+    <a href="/breaking-news">Breaking News</a>
+    <a href="/videos">Vídeos</a>
+    <a href="/projetos">Projetos</a>
+    <a href="/sobre">Sobre</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="sobre-hero prj-hero">
+  <div class="container">
+    <span class="kicker">Extensão universitária</span>
+    <h1>Nossos projetos</h1>
+    <p class="lead-text">São {{total}} projetos de extensão que levam a informação sobre medicamentos para fora da universidade: em Unidades de Saúde da Família, escolas, praças, clínicas parceiras e nas redes sociais. Cada um cuida de um tema, mas todos têm o mesmo propósito: <strong>promover o uso racional de medicamentos</strong> e combater a desinformação em saúde.</p>
+  </div>
+</section>
+
+<!-- ÍNDICE -->
+<section class="section prj-index-wrap">
+  <div class="container">
+    <div class="section-head"><h2>Conheça cada projeto</h2></div>
+    <nav class="prj-index" aria-label="Ir para um projeto">
+      {{#each projects}}
+      <a class="prj-chip" href="#{{slug}}">
+        <span class="prj-chip-logo"><img src="{{logo}}" alt="" loading="lazy"></span>
+        <span class="prj-chip-txt"><strong>{{name}}</strong><small>{{theme}}</small></span>
+      </a>
+      {{/each}}
+    </nav>
+  </div>
+</section>
+
+<!-- PROJETOS -->
+<section class="section prj-list-wrap">
+  <div class="container">
+    {{#each projects}}
+    <article class="prj" id="{{slug}}">
+      <div class="prj-media">
+        <img src="{{logo}}" alt="Logo do projeto {{name}}" loading="lazy">
+      </div>
+      <div class="prj-body">
+        <span class="prj-theme">{{theme}}</span>
+        <h2>{{name}}</h2>
+        {{#each summary}}<p>{{this}}</p>{{/each}}
+        {{#if instagram}}
+        <div class="prj-links">
+          {{#each instagram}}
+          <a class="prj-ig" href="{{url}}" target="_blank" rel="noopener">
+            <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>{{handle}}
+          </a>
+          {{/each}}
+        </div>
+        {{/if}}
+      </div>
+    </article>
+    {{/each}}
+  </div>
+</section>
+
+<!-- CHAMADA -->
+<section class="section prj-cta-wrap">
+  <div class="container">
+    <div class="prj-cta">
+      <div>
+        <h2>Quer levar um projeto para a sua escola ou unidade de saúde?</h2>
+        <p>Fale com a equipe do CIM-UFPB. A gente adora uma parceria.</p>
+      </div>
+      <div class="prj-cta-actions">
+        <a class="btn btn-primary" href="https://www.instagram.com/cimufpb/" target="_blank" rel="noopener">Falar no Instagram</a>
+        <a class="btn btn-ghost" href="mailto:cimufpb@gmail.com">Enviar e-mail</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" id="contato">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="/arquivos logo/LOGO DO CIM BRANCO.png" alt="Logo CIM-UFPB">
+          <span class="ftxt">CIM-UFPB<small>Informação sobre Medicamentos</small></span>
+        </div>
+        <p class="footer-about">O Centro de Informação sobre Medicamentos da UFPB promove o uso racional de medicamentos por meio de informação técnico-científica, educação em saúde e apoio à decisão clínica.</p>
+      </div>
+      <div>
+        <h4>Conteúdo</h4>
+        <ul>
+          <li><a href="/noticias">Notícias</a></li>
+          <li><a href="/breaking-news">Breaking News</a></li>
+          <li><a href="/videos">Vídeos</a></li>
+          <li><a href="/projetos">Projetos</a></li>
+          <li><a href="/sobre">Sobre Nós</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Fale Conosco</h4>
+        <div class="footer-contact">
+          <a href="https://www.instagram.com/cimufpb/" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>@cimufpb</a>
+          <a href="mailto:cimufpb@gmail.com"><svg class="icon" viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>cimufpb@gmail.com</a>
+          <a href="tel:+558330488529"><svg class="icon" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.6a2 2 0 01-.5 2.1L8.1 9.5a16 16 0 006 6l1.1-1.1a2 2 0 012.1-.5c.8.3 1.7.5 2.6.6a2 2 0 011.7 2z"/></svg>(83) 3048-8529</a>
+          <span><svg class="icon" viewBox="0 0 24 24"><path d="M12 21s-7-6.3-7-11a7 7 0 0114 0c0 4.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Dep. de Ciências Farmacêuticas, UFPB</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Centro de Informação sobre Medicamentos — Universidade Federal da Paraíba. Todos os direitos reservados.</div>
+  </div>
+</footer>
+
+<script src="/js/site.js"></script>
+</body>
+</html>
